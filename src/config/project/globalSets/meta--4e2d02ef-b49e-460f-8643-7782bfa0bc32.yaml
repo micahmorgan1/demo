@@ -1,0 +1,18 @@
+fieldLayouts:
+  7a23338a-34fe-412a-90cb-e5547916f7a0:
+    tabs:
+      -
+        elements:
+          -
+            fieldUid: d543c71a-2176-4726-971d-81592163248a
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            warning: null
+            width: 100
+        name: Content
+        sortOrder: 1
+handle: meta
+name: 'Meta Tags'

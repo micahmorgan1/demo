@@ -1,0 +1,74 @@
+{% macro pictureCard( pictureHash ) %}
+
+        {# defaults #}
+
+        {% set pictureDefaults = 
+            {   image:'', 
+                maxW: 1024, 
+                imgRatio: 1.666667, 
+                lazyload: true, 
+                imgClasses:''
+            } 
+        %}
+
+        {% set pictureHash = pictureDefaults |merge( pictureHash ) %}
+
+        {# variables #}
+
+
+        {% set widths = [ 1536, 1280, 1024, 768, 640, 425 ] %}
+        {# {% set maxW = 1024 %}
+        {% set imgRatio = 3/1 %}#}
+        {% set maxH = pictureHash.maxW / pictureHash.imgRatio %} 
+        {% set baseImage = craft.imager.transformImage (pictureHash.image, {
+                                width: pictureHash.maxW,
+                                ratio: pictureHash.imgRatio,
+                                jpegQuality:90})  ?? null %}
+        {% set imageSizes = [{'width': pictureHash.maxW}] %}
+        {% for width in widths %}
+            {% if (pictureHash.maxW > width) %}
+                {% if width >= 768 %}          
+                {% set imageSizes = imageSizes|merge ([{'width': width, jpegQuality: 65 }]) %}
+                {% else %}
+                {% set imageSizes = imageSizes|merge ([{'width': width}]) %}   
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+
+        {# srcset arrays jpg/webp #}
+
+        {% set transformedImages = craft.imager.transformImage(baseImage, imageSizes,  { ratio: pictureHash.imgRatio, jpegQuality: 80, format: 'jpg' }) %}
+        {% set transformedWebp = craft.imager.transformImage(baseImage, imageSizes,  { ratio: pictureHash.imgRatio, webpQuality: 75,  format: 'webp' }) %}
+
+            <picture>
+                <source srcset="{{ transformedWebp | srcset }}" type="image/webp"> 
+                {% if pictureHash.lazyload %}
+                <img class="lazyload {{pictureHash.imgClasses}}" src="{{ baseImage.getUrl() }}" alt ="{{ pictureHash.image.altText }}" srcset="{{ craft.imager.srcset(transformedImages)}}" width="{{ baseImage.getWidth() }}" height="{{ baseImage.getHeight() }}">
+                {% else %}
+                <img class="{{pictureHash.imgClasses}}" src="{{ baseImage.getUrl() }}" alt ="{{ pictureHash.image.altText }}" srcset="{{ craft.imager.placeholder({width: pictureHash.maxW, height: maxH }) }}" width="{{ pictureHash.maxW }}" height="{{ maxH }}">
+                {% endif %}
+            </picture>
+
+{% endmacro %}
+
+
+
+{% macro projectCard( project, pictureHash, size) %}
+
+    {% import _self as cards %}
+
+    <div class=" group relative {{ size }} overflow-hidden h-fit hover:shadow-inner duration-500">
+        <a href="">
+                {{ cards.pictureCard(pictureHash)}}       
+           
+            <div class="ease-in-out  absolute inset-x-0 -bottom-5 h-auto group-hover:bottom-0 py-1 pl-2 duration-500 text-xs group-hover:text-xs font-extralight group-hover:font-light tracking-wide  group-hover:pl-3 ">
+                <div class="overflow-hidden backdrop-blur-lg  bg-gradient-to-tr from-black blur-xl opacity-80 group-hover:opacity-90 absolute inset-0 duration-500 "></div>
+                <div class="relative ">
+                    <span class="text-white group-hover:underline underline-offset-2 uppercase ">{{ project.title }}</span>
+                    <span class="block opacity-0 group-hover:opacity-100 text-neutral-600 group-hover:text-neutral-100 text-xs capitalize font-light ease-in-out duration-500 delay-100 pb-2 pt-0.5 ">{{ project.location }}</span>
+                </div>
+            </div>
+        </a>
+    </div> 
+
+{% endmacro %}

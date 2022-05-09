@@ -1,0 +1,32 @@
+contentColumnType: string
+fieldGroup: 0fbff02d-46d1-4744-bbd4-1cc9ae8d92f1
+handle: siteImage
+instructions: 'This is the image that will be shared by default on Twitter and Facebook when someone shares our site'
+name: 'Site Image'
+searchable: true
+settings:
+  allowSelfRelations: false
+  allowUploads: true
+  allowedKinds: null
+  defaultUploadLocationSource: 'volume:2f7839c9-4c87-4bf6-9d3c-2181918ec980'
+  defaultUploadLocationSubpath: Site
+  limit: '1'
+  localizeRelations: false
+  previewMode: full
+  restrictFiles: ''
+  selectionLabel: ''
+  showSiteMenu: false
+  showUnpermittedFiles: false
+  showUnpermittedVolumes: false
+  singleUploadLocationSource: 'volume:2f7839c9-4c87-4bf6-9d3c-2181918ec980'
+  singleUploadLocationSubpath: ''
+  source: null
+  sources:
+    - 'volume:2f7839c9-4c87-4bf6-9d3c-2181918ec980'
+  targetSiteId: null
+  useSingleFolder: false
+  validateRelatedElements: false
+  viewMode: large
+translationKeyFormat: null
+translationMethod: site
+type: craft\fields\Assets

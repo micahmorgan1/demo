@@ -1,0 +1,52 @@
+{% extends "_layout" %}
+
+
+{# 
+{% import "_macros/cards" as cards %}
+
+{% set pictureHash = { image:meta.siteImage.one(), maxW: 640, lazyload: false, imgRatio: 5/3, imgClasses:'' } %}
+{% set image = pictureHash.image %}
+
+
+{% set widths = [ 1536, 1280, 1024, 768, 640, 425 ] %}
+{% set maxW = pictureHash.maxW %}
+{% set ratioDefault = 5/3 %}
+{% set maxH = maxW / ratioDefault %}
+{% set baseImage = craft.imager.transformImage (image, {
+                        width: maxW,
+                        ratio: ratioDefault,
+						jpegQuality:95})  ?? null %}
+
+{% set imageSizes = [{'width': maxW}] %}
+{% for width in widths %}
+    {% if (maxW > width) %}
+    {% set imageSizes = imageSizes|merge ([{'width': width}]) %}
+    {% endif %}
+{% endfor %}
+
+{% set transformedImages = craft.imager.transformImage(baseImage, imageSizes, {  format: 'jpg' }) %}
+{% set transformedWebp = craft.imager.transformImage(baseImage, imageSizes, {  format: 'webp' }) %}
+
+{% set project = {
+    title: 'Hooray, This is an extremely long congratulations message',
+    location: 'It Works'
+} %} #}
+
+
+{% block content %}
+<p>TESTING</p>
+
+{# 
+<div class="flex flex-col max-w-screen-2xl mx-auto px-5 sm:px-6 xl:px-16">
+
+    {{ cards.pictureCard(pictureHash) }}
+ 
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-1 md:gap-2 pt-4 grid-flow-row-dense" >
+    {{ cards.projectCard(project, { image:meta.siteImage.one(), lazyload: false, maxW:1024 },'col-span-2 row-span-2')}}
+    {{ cards.projectCard(project, pictureHash,'')}}
+    {{ cards.projectCard(project, pictureHash,'')}}
+    </div>
+
+</div>     #}
+
+{% endblock %}
